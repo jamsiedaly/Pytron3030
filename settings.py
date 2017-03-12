@@ -1,8 +1,13 @@
+import pygame
+
+
 class Settings():
 
 	def __init__(self):
-		self.screen_width = 1200
-		self.screen_height = 730
+		self.info = pygame.display.Info()
+		self.screen_width = self.info.current_w
+		self.screen_height = self.info.current_h
+		pygame.display.set_mode((self.screen_width,self.screen_height),pygame.FULLSCREEN)
 		self.bg_color = (0, 0, 20)
 		self.ship_speed_factor = 7.5
 		self.star_speed = 1

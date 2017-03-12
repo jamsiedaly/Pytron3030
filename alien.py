@@ -1,4 +1,5 @@
 import pygame
+from random import randint
 from pygame.sprite import Sprite
 
 class Alien :
@@ -15,7 +16,7 @@ class Alien :
 		self.rect.y = self.rect.height 
 		
 		self.y = -100
-		self.x = float(self.rect.x)
+		self.x = randint(0, ai_settings.screen_width - self.rect.width)
 		
 	def blitme(self):
 		self.screen.blit(self.image, (self.x, self.y))
