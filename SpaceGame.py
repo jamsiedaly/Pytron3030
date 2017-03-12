@@ -31,19 +31,24 @@ def run_game():
 	aliens.append(Alien(ai_settings, screen))
 	while True:
 		gf.check_events(ai_settings, screen, ship, bullets, reload)
-		odds = randint(0, 10)
+		oddsStar = randint(0, 10)
+		oddsAlien = randint(0, 50)
 		if reload.time >= 0:
 			reload.update()
-		if odds == 10:
+		if oddsStar == 10:
 			star_list.append(Stars(ai_settings, screen))
 			stars = Stars(ai_settings, screen)
+		if oddsAlien == 10:
+			aliens.append(Alien(ai_settings, screen))
 		ship.update()
 		if star_list[0].ypos > screen_height:
 			star_list.pop(0)
+		if aliens:
+			if aliens[0].y > screen_height:
+				aliens.pop(0)
 		if bullets:
 			if bullets[0].y < 0:
 				bullets.pop(0)
-		#print(aliens[0].speed)
 		gf.update_screen(ai_settings, screen, ship, star_list, bullets, aliens)
 		
 run_game()

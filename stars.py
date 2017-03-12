@@ -10,6 +10,7 @@ class Stars():
 			self.ai_settings = ai_settings
 			self.xpos = randint(0, ai_settings.screen_width)
 			self.ypos = 0
+			self.speed = ai_settings.star_speed
 		
 	def blitme(self):
 	
