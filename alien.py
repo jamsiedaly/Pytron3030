@@ -15,10 +15,10 @@ class Alien :
 		self.rect.x = self.rect.width
 		self.rect.y = self.rect.height 
 		
-		self.y = -100
+		self.y = [-100]
 		self.x = randint(0, ai_settings.screen_width - self.rect.width)
 		
 	def blitme(self):
-		self.screen.blit(self.image, (self.x, self.y))
+		self.screen.blit(self.image, (self.x, self.y[0]))
 		
-		self.y += self.ai_settings.alien_speed
+		self.y[0] += self.ai_settings.alien_speed
