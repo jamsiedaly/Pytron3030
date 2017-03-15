@@ -13,6 +13,7 @@ class Bullet(Sprite):
 		self.rect.centerx = ship.rect.centerx
 		self.rect.top = ship.rect.top
 		self.y = float(self.rect.y)
+		self.x = ship.rect.centerx
 		
 		self.color = ai_settings.bullet_color
 		self.speed_factor = ai_settings.bullet_speed_factor

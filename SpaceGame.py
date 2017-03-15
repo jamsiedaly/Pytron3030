@@ -29,21 +29,24 @@ def run_game():
 	reload = Timer(ai_settings)
 	alien_odds = ai_settings.alien_frequency
 	aliens = []
-	alienHitboxes = []
-	aliens.append(Alien(ai_settings, screen))
-	alienHitboxes.append(Hitbox(aliens[0]))
+
 	while True:
 		gf.check_events(ai_settings, screen, ship, bullets, reload)
 		oddsStar = randint(0, 10)
 		oddsAlien = randint(0, 50)
+		
+		for e in aliens:
+			for b in bullets:
+				if e.hitbox.y1[0][0] <= b.y  and b.y <= e.hitbox.y2() and e.hitbox.x1[0][0] <= b.x and b.x <= e.hitbox.x2():
+					bullets.remove(b)
+					aliens.remove(e)
+		
 		if reload.time >= 0:
 			reload.update()
 		if oddsStar == 10:
 			star_list.append(Stars(ai_settings, screen))
-			stars = Stars(ai_settings, screen)
 		if oddsAlien == 10:
 			aliens.append(Alien(ai_settings, screen))
-			#alienHitboxes.append(Hitbox(aliens))
 		ship.update()
 		if star_list[0].ypos > screen_height:
 			star_list.pop(0)
@@ -53,8 +56,7 @@ def run_game():
 		if bullets:
 			if bullets[0].y < 0:
 				bullets.pop(0)
-		print(alienHitboxes[0].y)
-		print(aliens[0].y)
+		
 		gf.update_screen(ai_settings, screen, ship, star_list, bullets, aliens)
 		
 run_game()

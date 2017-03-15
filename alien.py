@@ -1,6 +1,7 @@
 import pygame
 from random import randint
 from pygame.sprite import Sprite
+from hitbox import Hitbox
 
 class Alien :
 	 
@@ -16,9 +17,10 @@ class Alien :
 		self.rect.y = self.rect.height 
 		
 		self.y = [-100]
-		self.x = randint(0, ai_settings.screen_width - self.rect.width)
+		self.x = [randint(0, ai_settings.screen_width - self.rect.width)]
+		
+		self.hitbox = Hitbox(self)
 		
 	def blitme(self):
-		self.screen.blit(self.image, (self.x, self.y[0]))
-		
+		self.screen.blit(self.image, (self.x[0], self.y[0]))
 		self.y[0] += self.ai_settings.alien_speed
