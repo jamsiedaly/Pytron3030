@@ -10,6 +10,7 @@ from stars import Stars
 from bullet import Bullet
 from alien import Alien
 from hitbox import Hitbox
+from explosion import Explosion
 
 import game_functions as gf 
 
@@ -29,7 +30,7 @@ def run_game():
 	reload = Timer(ai_settings)
 	alien_odds = ai_settings.alien_frequency
 	aliens = []
-
+	Explosion(ship)
 	while True:
 		gf.check_events(ai_settings, screen, ship, bullets, reload)
 		oddsStar = randint(0, 10)
