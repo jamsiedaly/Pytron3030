@@ -30,7 +30,8 @@ def run_game():
 	reload = Timer(ai_settings)
 	alien_odds = ai_settings.alien_frequency
 	aliens = []
-	Explosion(ship)
+	explosions = []
+	
 	while True:
 		gf.check_events(ai_settings, screen, ship, bullets, reload)
 		oddsStar = randint(0, 10)
@@ -40,6 +41,7 @@ def run_game():
 			for b in bullets:
 				if e.hitbox.y1[0][0] <= b.y  and b.y <= e.hitbox.y2() and e.hitbox.x1[0][0] <= b.x and b.x <= e.hitbox.x2():
 					bullets.remove(b)
+					explosions.append(Explosion(e))
 					aliens.remove(e)
 		
 		if reload.time >= 0:
@@ -58,6 +60,6 @@ def run_game():
 			if bullets[0].y < 0:
 				bullets.pop(0)
 		
-		gf.update_screen(ai_settings, screen, ship, star_list, bullets, aliens)
+		gf.update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosions)
 		
 run_game()

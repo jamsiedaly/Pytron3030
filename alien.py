@@ -16,6 +16,9 @@ class Alien :
 		self.rect.x = self.rect.width
 		self.rect.y = self.rect.height 
 		
+		self.centerX = float(self.rect.centerx)
+		self.centerY = float(self.rect.centery)
+		
 		self.y = [-100]
 		self.x = [randint(0, ai_settings.screen_width - self.rect.width)]
 		

@@ -1,7 +1,7 @@
 import pygame
-from pygame.sprite import Sprite
+import copy
 
-class Explosion(Sprite):
+class Explosion():
 
 	def __init__(self, object):
 	
@@ -9,18 +9,25 @@ class Explosion(Sprite):
 		self.screen = object.screen
 		settings = object.ai_settings
 		self.image = pygame.image.load('Assets/PNG/Lasers/laserRed08.PNG')
-		self.rect = (object.rect.top, object.rect.left, 0, 0)
-		print(self.rect)
-		self.rect.centerx = object.centerX
-		self.rect.centery = object.centerY
-		self.centerX = float(self.rect.centerx)
-		self.centerY = float(self.rect.centery)
+		self.rect = copy.deepcopy(object.rect)
+		self.rect.width = 0
+		self.rect.height = 0
+		
+		self.centerx = object.centerX
+		self.centery = object.centerY
+		
+		self.rect.centerx = self.centerx
+		self.rect.centery = self.centery 
+		
 		self.time = settings.explosionTime
-		self.growth = settings.explosionSize / self.time
-
+		self.finalSize = object.rect.width
+		self.growth = self.finalSize / self.time
+		 
+		
 	def update(self):
-		self.centy -= self.speed_factor
-		self.rect.y = self.y
+		if (self.rect.width > self.finalSize):
+			self.rect.width += self.growth
+			self.rect.height += self.growth
 		
 	def blitme(self):
 		self.screen.blit(self.image, self.rect)
