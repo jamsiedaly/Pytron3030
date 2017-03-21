@@ -46,9 +46,9 @@ def run_game():
 		
 		if reload.time >= 0:
 			reload.update()
-		if oddsStar == 10:
+		if oddsStar >= 4:
 			star_list.append(Stars(ai_settings, screen))
-		if oddsAlien == 10:
+		if oddsAlien <= 10:
 			aliens.append(Alien(ai_settings, screen))
 		ship.update()
 		if star_list[0].ypos > screen_height:
