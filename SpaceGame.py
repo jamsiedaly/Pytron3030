@@ -54,7 +54,7 @@ def run_game():
 		if star_list[0].ypos > screen_height:
 			star_list.pop(0)
 		if aliens:
-			if aliens[0].y[0] > screen_height:
+			if aliens[0].rect.y > screen_height:
 				aliens.pop(0)
 		if bullets:
 			if bullets[0].y < 0:

@@ -18,4 +18,4 @@ class Settings():
 		self.time = 5
 		self.alien_speed = self.screen_width/200
 		self.alien_frequency = 100
-		self.explosionTime = 20
+		self.explosionTime = 100

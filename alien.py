@@ -16,14 +16,12 @@ class Alien :
 		self.rect.x = self.rect.width
 		self.rect.y = self.rect.height 
 		
-		self.centerX = float(self.rect.centerx)
-		self.centerY = float(self.rect.centery)
-		
-		self.y = [-100]
-		self.x = [randint(0, ai_settings.screen_width - self.rect.width)]
-		
+		self.centerY = [-100]
+		self.centerX = [randint(0, ai_settings.screen_width - self.rect.width)]
+
 		self.hitbox = Hitbox(self)
 		
 	def blitme(self):
-		self.screen.blit(self.image, (self.x[0], self.y[0]))
-		self.y[0] += self.ai_settings.alien_speed
+
+		self.screen.blit(self.image, (self.centerX[0], self.centerY[0]))
+		self.centerY[0] += self.ai_settings.alien_speed
