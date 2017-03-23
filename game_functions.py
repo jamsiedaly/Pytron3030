@@ -48,7 +48,9 @@ def update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosi
 	for alien in aliens:
 		alien.blitme()
 	for explosion in explosions:
-		explosion.update()
-		explosion.blitme()
+		if explosion.update():
+			explosion.blitme()
+		else:
+			explosions.remove(explosion)
 		
 	pygame.display.flip()

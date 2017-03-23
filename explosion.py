@@ -1,5 +1,6 @@
 import pygame
 import copy
+import random
 
 class Explosion():
 
@@ -8,30 +9,35 @@ class Explosion():
 		super(Explosion, self).__init__()
 		self.screen = parent.screen
 		settings = parent.ai_settings
-		self.image = pygame.image.load('Assets/PNG/Lasers/laserRed08.PNG')
+		self.image = pygame.image.load('Assets/PNG/Damage/playerShip3_Damage2.PNG')
 		self.rect = copy.deepcopy(parent.rect)
 		self.rect.width = 0
 		self.rect.height = 0
 		
-		self.centerx = parent.centerX
-		self.centery = parent.centerY
+		self.centerX = parent.centerX 
+		self.centerY = parent.centerY
 		
-		self.rect.centerx = self.centerx[0]
-		self.rect.centery = self.centery[0]
+		self.rect.centerx = self.centerX[0]
+		self.rect.centery = self.centerY[0]
 		
 		self.time = settings.explosionTime
 		self.finalSize = parent.rect.width * 2
 		self.growth = self.finalSize / self.time
+		self.rotate = random.uniform(-1.5, 1.5)
 		 
 		
 	def update(self):
 		if (self.rect.width < self.finalSize):
 			self.rect.width += self.growth
 			self.rect.height += self.growth
+			self.rect.centerx -= self.growth/2
+			self.rect.centery -= self.growth/2
+			self.image = pygame.transform.rotate(self.image, self.rotate)
+			self.image = pygame.transform.scale(self.image, (self.rect.width, self.rect.height))
 			return True
 		else:
 			return False
 		
 	def blitme(self):
-		#self.image = pygame.transform.scale(self.image, (self.rect.width, self.rect.height))
 		self.screen.blit(self.image, self.rect)
+		
