@@ -1,6 +1,7 @@
 import pygame
 import copy
 import random
+from random import randint
 
 class Explosion():
 
@@ -9,7 +10,10 @@ class Explosion():
 		super(Explosion, self).__init__()
 		self.screen = parent.screen
 		settings = parent.ai_settings
-		self.image = pygame.image.load('Assets/PNG/Damage/playerShip3_Damage2.PNG')
+		animation1 = randint(1,3)
+		animation2 = randint(1,3)
+		explosionAnimation = 'Assets/PNG/Damage/playerShip'+ str(animation1) +'_Damage'+ str(animation2) +'.PNG'
+		self.image = pygame.image.load(explosionAnimation)
 		self.rect = copy.deepcopy(parent.rect)
 		self.rect.width = 0
 		self.rect.height = 0
@@ -23,7 +27,7 @@ class Explosion():
 		self.time = settings.explosionTime
 		self.finalSize = parent.rect.width * 2
 		self.growth = self.finalSize / self.time
-		self.rotate = random.uniform(-1.5, 1.5)
+		self.rotate = random.uniform(-2, 2)
 		 
 		
 	def update(self):
