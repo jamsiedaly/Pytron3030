@@ -17,6 +17,7 @@ import game_functions as gf
 def run_game():
 	pygame.init()
 	
+	
 	ai_settings = Settings()
 	screen_height = ai_settings.screen_height
 	screen = pygame.display.set_mode(
@@ -31,8 +32,10 @@ def run_game():
 	alien_odds = ai_settings.alien_frequency
 	aliens = []
 	explosions = []
-	
+	refreshFPS = 10
+	avgFPS = 0
 	while True:
+		start = pygame.time.get_ticks()
 		gf.check_events(ai_settings, screen, ship, bullets, reload)
 		oddsStar = randint(0, 10)
 		oddsAlien = randint(0, 50)
@@ -48,7 +51,7 @@ def run_game():
 			reload.update()
 		if oddsStar >= 4:
 			star_list.append(Stars(ai_settings, screen))
-		if oddsAlien <= 10:
+		if oddsAlien == 10:
 			aliens.append(Alien(ai_settings, screen))
 		ship.update()
 		if star_list[0].ypos > screen_height:
@@ -61,5 +64,20 @@ def run_game():
 				bullets.pop(0)
 		
 		gf.update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosions)
+		finish = pygame.time.get_ticks()
+		delay = finish - start
 		
+		
+		fps = 1000/delay
+		if(refreshFPS == 0):
+			screen.fill(ai_settings.bg_color, (100,100, 100,100))
+			myfont = pygame.font.SysFont("monospace", 15)
+			label = myfont.render(str(int(avgFPS)), 1, (255,255,0))
+			screen.blit(label, (100, 100))
+			refreshFPS = 10
+			avgFPS = 0
+			
+		else:
+			refreshFPS -= 1
+			avgFPS += fps/10
 run_game()

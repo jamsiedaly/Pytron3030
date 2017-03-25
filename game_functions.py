@@ -38,7 +38,7 @@ def check_keyup_events(event, ship):
 		ship.moving_down = False
 				
 def update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosions):
-	screen.fill(ai_settings.bg_color)
+	screen.fill(ai_settings.bg_color, (200,0, 2400,2000))
 	for stars in star_list:
 		stars.blitme()
 	ship.blitme()

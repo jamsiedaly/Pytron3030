@@ -17,7 +17,7 @@ class Alien :
 		self.rect.y = self.rect.height 
 		
 		self.centerY = [-100]
-		self.centerX = [randint(0, ai_settings.screen_width - self.rect.width)]
+		self.centerX = [randint(200, ai_settings.screen_width - self.rect.width)]
 
 		self.hitbox = Hitbox(self)
 		
