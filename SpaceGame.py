@@ -74,10 +74,10 @@ def run_game():
 			myfont = pygame.font.SysFont("monospace", 15)
 			label = myfont.render(str(int(avgFPS)), 1, (255,255,0))
 			screen.blit(label, (100, 100))
-			refreshFPS = 10
+			refreshFPS = 5
 			avgFPS = 0
 			
 		else:
 			refreshFPS -= 1
-			avgFPS += fps/10
+			avgFPS += fps/5
 run_game()
