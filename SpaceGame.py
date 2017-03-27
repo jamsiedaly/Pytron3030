@@ -20,8 +20,8 @@ def run_game():
 	
 	ai_settings = Settings()
 	screen_height = ai_settings.screen_height
-	screen = pygame.display.set_mode(
-		(ai_settings.screen_width, ai_settings.screen_height))
+	screen = pygame.display.set_mode((ai_settings.screen_width, ai_settings.screen_height),pygame.FULLSCREEN | pygame.DOUBLEBUF)
+	screen.fill(ai_settings.bg_color, (0,0,10000,10000))
 	pygame.display.set_caption("Alien Invasion")
 	ship = Ship(ai_settings, screen)
 	stars = Stars(ai_settings, screen)
@@ -53,7 +53,6 @@ def run_game():
 			star_list.append(Stars(ai_settings, screen))
 		if oddsAlien == 10:
 			aliens.append(Alien(ai_settings, screen))
-		ship.update()
 		if star_list[0].ypos > screen_height:
 			star_list.pop(0)
 		if aliens:
@@ -70,10 +69,10 @@ def run_game():
 		
 		fps = 1000/delay
 		if(refreshFPS == 0):
-			screen.fill(ai_settings.bg_color, (100,100, 100,100))
+			screen.fill(ai_settings.bg_color, (0,0, 30,30))
 			myfont = pygame.font.SysFont("monospace", 15)
 			label = myfont.render(str(int(avgFPS)), 1, (255,255,0))
-			screen.blit(label, (100, 100))
+			screen.blit(label, (0,0))
 			refreshFPS = 5
 			avgFPS = 0
 			

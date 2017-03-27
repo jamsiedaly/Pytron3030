@@ -17,11 +17,11 @@ class Alien :
 		self.rect.y = self.rect.height 
 		
 		self.centerY = [-100]
-		self.centerX = [randint(200, ai_settings.screen_width - self.rect.width)]
+		self.centerX = [randint(0, ai_settings.screen_width - self.rect.width)]
 
 		self.hitbox = Hitbox(self)
 		
 	def blitme(self):
-
-		self.screen.blit(self.image, (self.centerX[0], self.centerY[0]))
+		pygame.draw.rect(self.screen,self.ai_settings.bg_color, (self.centerX[0], self.centerY[0], self.image.get_width(), self.image.get_height()))
 		self.centerY[0] += self.ai_settings.alien_speed
+		self.screen.blit(self.image, (self.centerX[0], self.centerY[0]))

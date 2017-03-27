@@ -7,7 +7,7 @@ class Bullet(Sprite):
 	
 		super(Bullet, self).__init__()
 		self.screen = screen
-		
+		self.settings = ai_settings
 		self.rect = pygame.Rect(0, 0,
 		ai_settings.bullet_width, ai_settings.bullet_height)
 		self.rect.centerx = ship.rect.centerx
@@ -18,9 +18,9 @@ class Bullet(Sprite):
 		self.color = ai_settings.bullet_color
 		self.speed_factor = ai_settings.bullet_speed_factor
 
-	def update(self):
+
+	def blitme(self):
+		pygame.draw.rect(self.screen, self.settings.bg_color, self.rect)
 		self.y -= self.speed_factor
 		self.rect.y = self.y
-		
-	def blitme(self):
 		pygame.draw.rect(self.screen, self.color, self.rect)
