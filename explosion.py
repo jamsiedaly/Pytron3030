@@ -29,9 +29,10 @@ class Explosion():
 		self.growth = self.finalSize / self.time
 		self.rotate = random.uniform(-2, 2)
 		 
+	def erase(self):
+		pygame.draw.rect(self.screen,self.settings.bg_color, self.rect)
 		
 	def blitme(self):
-		pygame.draw.rect(self.screen,self.settings.bg_color, self.rect)
 		if (self.rect.width < self.finalSize):
 			self.rect.width += self.growth
 			self.rect.height += self.growth

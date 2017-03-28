@@ -21,9 +21,10 @@ class Ship():
 		self.moving_up = False
 		self.moving_down = False
 		
+	def erase(self):
+		pygame.draw.rect(self.screen,self.ai_settings.bg_color, self.rect)
 		
 	def blitme(self):
-		pygame.draw.rect(self.screen,self.ai_settings.bg_color, self.rect)
 		if self.moving_right and self.rect.right < self.screen_rect.right:
 			self.centerX += self.ai_settings.ship_speed_factor
 		if self.moving_left and self.rect.left > self.screen_rect.left:

@@ -12,8 +12,10 @@ class Stars():
 			self.ypos = -5
 			self.speed = ai_settings.star_speed
 		
-	def blitme(self):
+	def erase(self):
 		pygame.draw.rect(self.screen, self.ai_settings.bg_color, (self.xpos, self.ypos, 2, 2), 5)
+	
+	def blitme(self):
 		yellow =(100, 100, 0)
 		self.ypos += self.ai_settings.star_speed
 		pygame.draw.rect(self.screen, yellow, (self.xpos, self.ypos, 2, 2), 5)

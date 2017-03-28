@@ -45,6 +45,7 @@ def run_game():
 				if e.hitbox.y1[0][0] <= b.y  and b.y <= e.hitbox.y2() and e.hitbox.x1[0][0] <= b.x and b.x <= e.hitbox.x2():
 					bullets.remove(b)
 					explosions.append(Explosion(e))
+					e.erase()
 					aliens.remove(e)
 		
 		if reload.time >= 0:

@@ -39,7 +39,15 @@ def check_keyup_events(event, ship):
 				
 def update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosions):
 	
-	refreshRects  = []
+	for stars in star_list:
+		stars.erase()
+	ship.erase()
+	for bullet in bullets:
+		bullet.erase()
+	for alien in aliens:
+		alien.erase()
+	for explosion in explosions:
+		explosion.erase()
 	for stars in star_list:
 		stars.blitme()
 	ship.blitme()
