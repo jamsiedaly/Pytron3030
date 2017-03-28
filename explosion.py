@@ -27,7 +27,7 @@ class Explosion():
 		self.time = self.settings.explosionTime
 		self.finalSize = parent.rect.width * 2
 		self.growth = self.finalSize / self.time
-		self.rotate = random.uniform(-2, 2)
+		self.rotate = random.uniform(-3.5, 3.5)
 		 
 	def erase(self):
 		pygame.draw.rect(self.screen,self.settings.bg_color, self.rect)

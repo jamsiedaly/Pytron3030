@@ -21,7 +21,7 @@ def run_game():
 	ai_settings = Settings()
 	screen_height = ai_settings.screen_height
 	screen = pygame.display.set_mode((ai_settings.screen_width, ai_settings.screen_height),pygame.FULLSCREEN | pygame.DOUBLEBUF)
-	screen.fill(ai_settings.bg_color, (0,0,10000,10000))
+	screen.fill(ai_settings.bg_color, (0,0,ai_settings.screen_width,ai_settings.screen_height))
 	pygame.display.set_caption("Alien Invasion")
 	ship = Ship(ai_settings, screen)
 	stars = Stars(ai_settings, screen)
@@ -34,6 +34,7 @@ def run_game():
 	explosions = []
 	refreshFPS = 10
 	avgFPS = 0
+	pygame.mixer.music.load('Assets/Sounds/explosion.mp3')
 	while True:
 		start = pygame.time.get_ticks()
 		gf.check_events(ai_settings, screen, ship, bullets, reload)
@@ -43,6 +44,7 @@ def run_game():
 		for e in aliens:
 			for b in bullets:
 				if e.hitbox.y1[0][0] <= b.y  and b.y <= e.hitbox.y2() and e.hitbox.x1[0][0] <= b.x and b.x <= e.hitbox.x2():
+					pygame.mixer.music.play(0)
 					bullets.remove(b)
 					explosions.append(Explosion(e))
 					e.erase()
