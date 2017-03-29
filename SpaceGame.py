@@ -26,7 +26,8 @@ def run_game():
 	ship = Ship(ai_settings, screen)
 	stars = Stars(ai_settings, screen)
 	bullet = Bullet(ai_settings, screen, ship)
-	star_list = [stars]
+	starIndex = 0
+	star_list = [Stars(ai_settings, screen) for i in range(200)]
 	bullets = [bullet]
 	reload = Timer(ai_settings)
 	alien_odds = ai_settings.alien_frequency
@@ -53,11 +54,10 @@ def run_game():
 		if reload.time >= 0:
 			reload.update()
 		if oddsStar >= 4:
-			star_list.append(Stars(ai_settings, screen))
+			star_list[starIndex%200].activate()
+			starIndex += 1
 		if oddsAlien == 10:
 			aliens.append(Alien(ai_settings, screen))
-		if star_list[0].ypos > screen_height:
-			star_list.pop(0)
 		if aliens:
 			if aliens[0].rect.y > screen_height:
 				aliens.pop(0)
