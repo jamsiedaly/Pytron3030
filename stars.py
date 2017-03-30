@@ -24,9 +24,9 @@ class Stars():
 	def erase(self):
 		pygame.draw.rect(self.screen, self.ai_settings.bg_color, (self.xpos, self.ypos, 2, 2), 5)
 	
-	def blitme(self):
+	def blitme(self, delay):
 		yellow =(100, 100, 0)
-		self.ypos += self.speed
+		self.ypos += self.speed * delay
 		if(self.ypos > self.ai_settings.screen_height):
 			self.reset()
 		pygame.draw.rect(self.screen, yellow, (self.xpos, self.ypos, 2, 2), 5)

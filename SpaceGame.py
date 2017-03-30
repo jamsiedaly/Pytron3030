@@ -17,7 +17,8 @@ import game_functions as gf
 def run_game():
 	pygame.init()
 	
-	
+	clock = pygame.time.Clock()
+	clock.tick()
 	ai_settings = Settings()
 	screen_height = ai_settings.screen_height
 	screen = pygame.display.set_mode((ai_settings.screen_width, ai_settings.screen_height),pygame.FULLSCREEN | pygame.DOUBLEBUF)
@@ -35,9 +36,11 @@ def run_game():
 	explosions = []
 	refreshFPS = 10
 	avgFPS = 0
+	delay = 0
 	pygame.mixer.music.load('Assets/Sounds/explosion.mp3')
 	while True:
-		start = pygame.time.get_ticks()
+		clock.tick()
+		delay = clock.get_time()
 		gf.check_events(ai_settings, screen, ship, bullets, reload)
 		oddsStar = randint(0, 10)
 		oddsAlien = randint(0, 50)
@@ -65,21 +68,10 @@ def run_game():
 			if bullets[0].y < 0:
 				bullets.pop(0)
 		
-		gf.update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosions)
-		finish = pygame.time.get_ticks()
-		delay = finish - start
-		
-		
-		fps = 1000/delay
-		if(refreshFPS == 0):
-			screen.fill(ai_settings.bg_color, (0,0, 30,30))
-			myfont = pygame.font.SysFont("monospace", 15)
-			label = myfont.render(str(int(avgFPS)), 1, (255,255,0))
-			screen.blit(label, (0,0))
-			refreshFPS = 5
-			avgFPS = 0
-			
-		else:
-			refreshFPS -= 1
-			avgFPS += fps/5
+		gf.update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosions, delay)
+		screen.fill(ai_settings.bg_color, (0,0, 30,30))
+		myfont = pygame.font.SysFont("monospace", 15)
+		label = myfont.render(str(int(clock.get_fps())), 1, (255,255,0))
+		screen.blit(label, (0,0))
+
 run_game()
