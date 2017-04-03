@@ -12,22 +12,26 @@ class Stars():
 			self.ypos = -5
 			self.speed = 0
 			self.active = False
-			#self.speed = ai_settings.star_speed
+			self.speed = ai_settings.star_speed
 		
 	def activate(self):
 		self.speed = self.ai_settings.star_speed
+		self.active = True
 
 	def reset(self):
 		self.speed = 0
 		self.ypos = -5
+		self.active = False
 		
 	def erase(self):
-		pygame.draw.rect(self.screen, self.ai_settings.bg_color, (self.xpos, self.ypos, 2, 2), 5)
+		if self.active:
+			pygame.draw.rect(self.screen, self.ai_settings.bg_color, (self.xpos, self.ypos, 2, 2), 5)
 	
 	def blitme(self, delay):
-		yellow =(100, 100, 0)
-		self.ypos += self.speed * delay
-		if(self.ypos > self.ai_settings.screen_height):
-			self.reset()
-		pygame.draw.rect(self.screen, yellow, (self.xpos, self.ypos, 2, 2), 5)
+		if self.active:
+			yellow =(100, 100, 0)
+			self.ypos += self.speed * delay
+			if(self.ypos > self.ai_settings.screen_height):
+				self.reset()
+			pygame.draw.rect(self.screen, yellow, (self.xpos, self.ypos, 2, 2), 5)
 		

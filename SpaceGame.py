@@ -21,7 +21,7 @@ def run_game():
 	clock.tick()
 	ai_settings = Settings()
 	screen_height = ai_settings.screen_height
-	screen = pygame.display.set_mode((ai_settings.screen_width, ai_settings.screen_height),pygame.FULLSCREEN | pygame.DOUBLEBUF)
+	screen = pygame.display.set_mode((ai_settings.screen_width, ai_settings.screen_height),pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE)
 	screen.fill(ai_settings.bg_color, (0,0,ai_settings.screen_width,ai_settings.screen_height))
 	pygame.display.set_caption("Alien Invasion")
 	ship = Ship(ai_settings, screen)
@@ -29,16 +29,19 @@ def run_game():
 	bullet = Bullet(ai_settings, screen, ship)
 	starIndex = 0
 	star_list = [Stars(ai_settings, screen) for i in range(200)]
+	alienFrequency = 0
+	alienIndex = 0
+	aliens = [Alien(ai_settings, screen) for i in range(200)]
 	bullets = [bullet]
 	reload = Timer(ai_settings)
 	alien_odds = ai_settings.alien_frequency
-	aliens = []
 	explosions = []
 	refreshFPS = 10
 	avgFPS = 0
 	delay = 0
 	pygame.mixer.music.load('Assets/Sounds/explosion.mp3')
 	while True:
+		alienFrequency = int(pygame.time.get_ticks() / 10000)
 		clock.tick()
 		delay = clock.get_time()
 		gf.check_events(ai_settings, screen, ship, bullets, reload)
@@ -46,24 +49,34 @@ def run_game():
 		oddsAlien = randint(0, 50)
 		
 		for e in aliens:
+			if e.hitbox.y1[0][0] <= ship.rect.y  and ship.rect.y  <= e.hitbox.y2() and e.hitbox.x1[0][0] <= ship.rect.x and ship.rect.x <= e.hitbox.x2() and e.active:
+				pygame.mixer.music.play(0)
+				explosions.append(Explosion(ship))
+			if e.hitbox.y1[0][0] <= ship.rect.y + ship.rect.height  and ship.rect.y + ship.rect.height <= e.hitbox.y2() and e.hitbox.x1[0][0] <= ship.rect.x + ship.rect.width and ship.rect.x + ship.rect.width <= e.hitbox.x2() and e.active:
+				pygame.mixer.music.play(0)
+				explosions.append(Explosion(ship))
+			if e.hitbox.y1[0][0] <= ship.rect.y  and ship.rect.y  <= e.hitbox.y2() and e.hitbox.x1[0][0] <= ship.rect.x  and ship.rect.x <= e.hitbox.x2() and e.active:
+				pygame.mixer.music.play(0)
+				explosions.append(Explosion(ship))
+			if e.hitbox.y1[0][0] <= ship.rect.y + ship.rect.height and ship.rect.y + ship.rect.height <= e.hitbox.y2() and e.hitbox.x1[0][0] <= ship.rect.x + ship.rect.width and ship.rect.x + ship.rect.width <= e.hitbox.x2() and e.active:
+				pygame.mixer.music.play(0)
+				explosions.append(Explosion(ship))
 			for b in bullets:
-				if e.hitbox.y1[0][0] <= b.y  and b.y <= e.hitbox.y2() and e.hitbox.x1[0][0] <= b.x and b.x <= e.hitbox.x2():
+				if e.hitbox.y1[0][0] <= b.y  and b.y <= e.hitbox.y2() and e.hitbox.x1[0][0] <= b.x and b.x <= e.hitbox.x2() and e.active:
 					pygame.mixer.music.play(0)
 					bullets.remove(b)
 					explosions.append(Explosion(e))
 					e.erase()
-					aliens.remove(e)
+					e.reset()
 		
 		if reload.time >= 0:
 			reload.update()
-		if oddsStar >= 4:
+		if oddsStar == 10:
 			star_list[starIndex%200].activate()
 			starIndex += 1
-		if oddsAlien == 10:
-			aliens.append(Alien(ai_settings, screen))
-		if aliens:
-			if aliens[0].rect.y > screen_height:
-				aliens.pop(0)
+		if oddsAlien <= alienFrequency:
+			aliens[alienIndex%200].activate()
+			alienIndex += 1
 		if bullets:
 			if bullets[0].y < 0:
 				bullets.pop(0)

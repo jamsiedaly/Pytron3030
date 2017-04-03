@@ -40,7 +40,7 @@ def check_keyup_events(event, ship):
 def update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosions, delay):
 	
 	for stars in star_list:
-		stars.erase()
+			stars.erase()
 	ship.erase()
 	for bullet in bullets:
 		bullet.erase()
