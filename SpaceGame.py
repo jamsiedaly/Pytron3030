@@ -48,21 +48,14 @@ def run_game():
 		oddsStar = randint(0, 10)
 		oddsAlien = randint(0, 50)
 		
+		for alien in aliens:
+			if pygame.sprite.collide_rect(ship, alien):
+				pygame.mixer.music.play(0)
+				explosions.append(Explosion(ship))
+		
 		for e in aliens:
-			if e.hitbox.y1[0][0] <= ship.rect.y  and ship.rect.y  <= e.hitbox.y2() and e.hitbox.x1[0][0] <= ship.rect.x and ship.rect.x <= e.hitbox.x2() and e.active:
-				pygame.mixer.music.play(0)
-				explosions.append(Explosion(ship))
-			if e.hitbox.y1[0][0] <= ship.rect.y + ship.rect.height  and ship.rect.y + ship.rect.height <= e.hitbox.y2() and e.hitbox.x1[0][0] <= ship.rect.x + ship.rect.width and ship.rect.x + ship.rect.width <= e.hitbox.x2() and e.active:
-				pygame.mixer.music.play(0)
-				explosions.append(Explosion(ship))
-			if e.hitbox.y1[0][0] <= ship.rect.y  and ship.rect.y  <= e.hitbox.y2() and e.hitbox.x1[0][0] <= ship.rect.x  and ship.rect.x <= e.hitbox.x2() and e.active:
-				pygame.mixer.music.play(0)
-				explosions.append(Explosion(ship))
-			if e.hitbox.y1[0][0] <= ship.rect.y + ship.rect.height and ship.rect.y + ship.rect.height <= e.hitbox.y2() and e.hitbox.x1[0][0] <= ship.rect.x + ship.rect.width and ship.rect.x + ship.rect.width <= e.hitbox.x2() and e.active:
-				pygame.mixer.music.play(0)
-				explosions.append(Explosion(ship))
 			for b in bullets:
-				if e.hitbox.y1[0][0] <= b.y  and b.y <= e.hitbox.y2() and e.hitbox.x1[0][0] <= b.x and b.x <= e.hitbox.x2() and e.active:
+				if e.hitbox.y1[0] <= b.y  and b.y <= e.hitbox.y2() and e.hitbox.x1[0]<= b.x and b.x <= e.hitbox.x2() and e.active:
 					pygame.mixer.music.play(0)
 					bullets.remove(b)
 					explosions.append(Explosion(e))
