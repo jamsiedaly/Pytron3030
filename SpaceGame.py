@@ -32,7 +32,7 @@ def run_game():
 	alienIndex = 0
 	aliens = [Alien(ai_settings, screen) for i in range(200)]
 	bullets = [bullet]
-	reload = Timer(ai_settings)
+	reload = Timer(ai_settings, screen)
 	alien_odds = ai_settings.alien_frequency
 	explosions = []
 	refreshFPS = 10
@@ -40,9 +40,8 @@ def run_game():
 	delay = 0
 	pygame.mixer.music.load('Assets/Sounds/explosion.mp3')
 	myfont = pygame.font.SysFont("monospace", 15)
-	gf.update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosions, delay)
 	while True:
-		gf.update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosions, delay)
+		gf.update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosions, reload ,delay)
 		alienFrequency = int(pygame.time.get_ticks() / 10000)
 		clock.tick()
 		delay = clock.get_time()
@@ -66,8 +65,8 @@ def run_game():
 					alien.erase()
 					alien.reset()
 				
-		if reload.time >= 0:
-			reload.update()
+				
+		reload.update(delay)
 		if oddsStar == 10:
 			star_list[starIndex%200].activate()
 			starIndex += 1

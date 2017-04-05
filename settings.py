@@ -14,7 +14,7 @@ class Settings():
 		self.bullet_width = 3
 		self.bullet_height = 15
 		self.bullet_color = 150, 150, 255
-		self.time = 2
+		self.time = 500
 		self.alien_speed = self.screen_width/5000
 		self.alien_frequency = 100
 		self.explosionTime = 5

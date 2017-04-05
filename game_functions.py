@@ -37,11 +37,12 @@ def check_keyup_events(event, ship):
 	elif event.key == pygame.K_DOWN:
 		ship.moving_down = False
 				
-def update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosions, delay):
+def update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosions,  reload, delay):
 	
 	for stars in star_list:
 			stars.erase()
 	ship.erase()
+	reload.erase()
 	for bullet in bullets:
 		bullet.erase()
 	for alien in aliens:
@@ -51,6 +52,8 @@ def update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosi
 	for stars in star_list:
 		stars.blitme(delay)
 	ship.blitme(delay)
+
+	reload.blitme()
 	for bullet in bullets:
 		bullet.blitme()
 	for alien in aliens:
