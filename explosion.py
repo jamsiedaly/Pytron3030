@@ -18,11 +18,8 @@ class Explosion():
 		self.rect.width = 0
 		self.rect.height = 0
 		
-		self.centerX = parent.centerX 
-		self.centerY = parent.centerY
-		
-		self.rect.centerx = self.centerX[0]
-		self.rect.centery = self.centerY[0]
+		self.rect.centerx = parent.rect.x + parent.rect.width/2
+		self.rect.centery = parent.rect.y + parent.rect.height/2
 		
 		self.time = self.settings.explosionTime
 		self.finalSize = parent.rect.width * 2

@@ -50,7 +50,7 @@ def update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosi
 		explosion.erase()
 	for stars in star_list:
 		stars.blitme(delay)
-	ship.blitme()
+	ship.blitme(delay)
 	for bullet in bullets:
 		bullet.blitme()
 	for alien in aliens:

@@ -13,20 +13,17 @@ class Alien :
 		self.rect = self.image.get_rect()
 		self.speed = ai_settings.alien_speed
 		
-		self.rect.x = self.rect.width
-		self.rect.y = self.rect.height 
-		
-		self.rect.y = -100
+		self.rect.y = -1000
 		self.rect.x = randint(0, ai_settings.screen_width - self.rect.width)
 		self.active = False
 		self.hitbox = Hitbox(self)
 		
 	def activate(self):
 		self.active =  True
-		self.hitbox = Hitbox(self)
+		self.rect.y = -100
 	
 	def reset(self):
-		self.rect.y = -100
+		self.rect.y = -1000
 		self.active = False
 	
 	def erase(self):
@@ -35,7 +32,7 @@ class Alien :
 		
 	def blitme(self, delay):
 		if self.active:
-			self.rect.y += self.ai_settings.alien_speed + delay
+			self.rect.y += self.ai_settings.alien_speed*delay
 			self.screen.blit(self.image, (self.rect.x, self.rect.y))
 			if(self.rect.y > self.ai_settings.screen_height + 100):
 				self.reset()
