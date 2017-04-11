@@ -17,6 +17,7 @@ import game_functions as gf
 def run_game():
 	pygame.init()
 	
+	numberOfLives = 3
 	clock = pygame.time.Clock()
 	ai_settings = Settings()
 	screen_height = ai_settings.screen_height
@@ -39,15 +40,28 @@ def run_game():
 	avgFPS = 0
 	delay = 0
 	pygame.mixer.music.load('Assets/Sounds/explosion.mp3')
-	myfont = pygame.font.SysFont("monospace", 15)
+	myfont = pygame.font.SysFont("monospace", 10)
+	livesfont = pygame.font.SysFont("monospace", 30)
+	UI_color = (100, 100, 110)
+	pause = 0
+	paused = False
 	while True:
 		gf.update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosions, reload ,delay)
 		alienFrequency = int(pygame.time.get_ticks() / 10000)
 		clock.tick()
 		delay = clock.get_time()
 		gf.check_events(ai_settings, screen, ship, bullets, reload)
-		oddsStar = randint(0, 10)
-		oddsAlien = randint(0, 50)
+		if pause <= 0 and paused:
+			paused = False
+			numberOfLives = 3
+			ship.reset()
+			
+		else:
+			pause -= delay
+		
+		if paused == False:
+			oddsStar = randint(0, 10)
+			oddsAlien = randint(0, 50)
 		
 		for alien in aliens:
 			if pygame.sprite.collide_rect(ship, alien):
@@ -55,6 +69,16 @@ def run_game():
 				alien.reset()
 				pygame.mixer.music.play(0)
 				explosions.append(Explosion(ship))
+				numberOfLives -= 1
+				if numberOfLives == 0:
+					ship.erase()
+					ship.centerX[0] = -1000
+					for alien in aliens:
+						explosions.append(Explosion(alien))
+						alien.erase()
+						alien.reset()
+						pause = 3000
+						paused = True
 		
 		for alien in aliens:
 			for bullet in bullets:
@@ -78,8 +102,12 @@ def run_game():
 				bullets[0].erase()
 				bullets.pop(0)
 		
-		screen.fill(ai_settings.bg_color, (0,0, 30,30))
+		screen.fill(UI_color, (0,0, 100,100))
 		label = myfont.render(str(int(clock.get_fps())), 1, (255,255,0))
+		lives = myfont.render("LIVES REMAINING :", 1, (255,255,0))
+		remaining = livesfont.render(str(numberOfLives), 1, (255,255,0))
 		screen.blit(label, (0,0))
-
+		screen.blit(lives, (0,30))
+		screen.blit(remaining, (20,45))
+		pygame.display.flip()
 run_game()

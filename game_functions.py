@@ -64,4 +64,3 @@ def update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosi
 		else:
 			explosions.remove(explosion)
 		
-	pygame.display.flip()

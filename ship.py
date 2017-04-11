@@ -27,6 +27,11 @@ class Ship():
 	def erase(self):
 		pygame.draw.rect(self.screen,self.ai_settings.bg_color, self.rect)
 		
+	def reset(self):
+		self.centerX = [float(self.screen_rect.centerx)]
+		self.centerY = [float(self.screen_rect.bottom)] 
+		
+		
 	def blitme(self, delay):
 		self.rect.width = self.OriginalWidth
 		if self.moving_right and self.rect.right < self.screen_rect.right:
