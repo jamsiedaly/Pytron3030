@@ -42,9 +42,11 @@ def run_game():
 	pygame.mixer.music.load('Assets/Sounds/explosion.mp3')
 	myfont = pygame.font.SysFont("monospace", 10)
 	livesfont = pygame.font.SysFont("monospace", 30)
+	gameOver = pygame.font.SysFont("monospace", 60)
 	UI_color = (100, 100, 110)
 	pause = 0
 	paused = False
+	gameOverMessage = ""
 	while True:
 		gf.update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosions, reload ,delay)
 		alienFrequency = int(pygame.time.get_ticks() / 10000)
@@ -55,6 +57,9 @@ def run_game():
 			paused = False
 			numberOfLives = 3
 			ship.reset()
+			gameOverMessage = ""
+			screen.fill(ai_settings.bg_color, (700,450, 600,200))
+			alienFrequency = 0
 			
 		else:
 			pause -= delay
@@ -72,7 +77,8 @@ def run_game():
 				numberOfLives -= 1
 				if numberOfLives == 0:
 					ship.erase()
-					ship.centerX[0] = -1000
+					ship.centerX[0] = -10000
+					gameOverMessage = "GAME OVER!!!"
 					for alien in aliens:
 						explosions.append(Explosion(alien))
 						alien.erase()
@@ -106,8 +112,10 @@ def run_game():
 		label = myfont.render(str(int(clock.get_fps())), 1, (255,255,0))
 		lives = myfont.render("LIVES REMAINING :", 1, (255,255,0))
 		remaining = livesfont.render(str(numberOfLives), 1, (255,255,0))
+		gg = gameOver.render(gameOverMessage, 1, (255,255,0))
 		screen.blit(label, (0,0))
 		screen.blit(lives, (0,30))
 		screen.blit(remaining, (20,45))
+		screen.blit(gg, (700,450))
 		pygame.display.flip()
 run_game()
