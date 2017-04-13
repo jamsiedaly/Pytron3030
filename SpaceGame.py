@@ -17,37 +17,47 @@ import game_functions as gf
 def run_game():
 	pygame.init()
 	
-	numberOfLives = 3
-	clock = pygame.time.Clock()
+	#Basic housekeeping setting up screen and importing my settings
 	ai_settings = Settings()
 	screen_height = ai_settings.screen_height
 	screen = pygame.display.set_mode((1920, 1080),pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE)
 	screen.fill(ai_settings.bg_color, (0,0,ai_settings.screen_width,ai_settings.screen_height))
 	pygame.display.set_caption("Alien Invasion")
+	
+	#Create game loops main objects and variables
 	ship = Ship(ai_settings, screen)
-	stars = Stars(ai_settings, screen)
+	reload = Timer(ai_settings, screen)
+	clock = pygame.time.Clock()
 	bullet = Bullet(ai_settings, screen, ship)
+	bullets = []
+	explosions = []
 	starIndex = 0
-	star_list = [Stars(ai_settings, screen) for i in range(200)]
+	numberOfLives = 3
 	alienFrequency = 0
 	alienIndex = 0
-	aliens = [Alien(ai_settings, screen) for i in range(200)]
-	bullets = [bullet]
-	reload = Timer(ai_settings, screen)
-	alien_odds = ai_settings.alien_frequency
-	explosions = []
 	refreshFPS = 10
 	avgFPS = 0
 	delay = 0
+	pause = 0
 	pygame.mixer.music.load('Assets/Sounds/explosion.mp3')
 	myfont = pygame.font.SysFont("monospace", 10)
 	livesfont = pygame.font.SysFont("monospace", 30)
 	gameOver = pygame.font.SysFont("monospace", 60)
 	UI_color = (100, 100, 110)
-	pause = 0
+	fontColor = (255, 255, 0)
+	HUD_rect = (0, 0, 100, 100)
 	paused = False
 	gameOverMessage = ""
+	
+	
+	#Objects are pooled before the game runs, consumes memory but reduces repsonse times
+	star_list = [Stars(ai_settings, screen) for i in range(200)]
+	aliens = [Alien(ai_settings, screen) for i in range(200)]
+	
+	#Game loop which will run every frame
 	while True:
+	
+		#
 		gf.update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosions, reload ,delay)
 		alienFrequency = int(pygame.time.get_ticks() / 10000)
 		clock.tick()
@@ -108,14 +118,16 @@ def run_game():
 				bullets[0].erase()
 				bullets.pop(0)
 		
-		screen.fill(UI_color, (0,0, 100,100))
-		label = myfont.render(str(int(clock.get_fps())), 1, (255,255,0))
-		lives = myfont.render("LIVES REMAINING :", 1, (255,255,0))
-		remaining = livesfont.render(str(numberOfLives), 1, (255,255,0))
-		gg = gameOver.render(gameOverMessage, 1, (255,255,0))
+		screen.fill(UI_color, HUD_rect)
+		label = myfont.render(str(int(clock.get_fps())), 1, fontColor)
+		lives = myfont.render("LIVES REMAINING :", 1, fontColor)
+		remaining = livesfont.render(str(numberOfLives), 1, fontColor)
+		gg = gameOver.render(gameOverMessage, 1, fontColor)
 		screen.blit(label, (0,0))
 		screen.blit(lives, (0,30))
 		screen.blit(remaining, (20,45))
 		screen.blit(gg, (700,450))
 		pygame.display.flip()
-run_game()
+		
+if __name__ == "__main__":
+	run_game()
