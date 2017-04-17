@@ -20,7 +20,8 @@ def run_game():
 	#Basic housekeeping setting up screen and importing my settings
 	ai_settings = Settings()
 	screen_height = ai_settings.screen_height
-	screen = pygame.display.set_mode((1920, 1080),pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE)
+	screen_width = ai_settings.screen_width
+	screen = pygame.display.set_mode((screen_width, screen_height),pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE)
 	screen.fill(ai_settings.bg_color, (0,0,ai_settings.screen_width,ai_settings.screen_height))
 	pygame.display.set_caption("Alien Invasion")
 	
@@ -57,10 +58,9 @@ def run_game():
 	#Game loop which will run every frame
 	while True:
 	
-		#
 		gf.update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosions, reload ,delay)
 		alienFrequency = int(pygame.time.get_ticks() / 10000)
-		clock.tick()
+		clock.tick(60)
 		delay = clock.get_time()
 		gf.check_events(ai_settings, screen, ship, bullets, reload)
 		if pause <= 0 and paused:
@@ -126,7 +126,7 @@ def run_game():
 		screen.blit(label, (0,0))
 		screen.blit(lives, (0,30))
 		screen.blit(remaining, (20,45))
-		screen.blit(gg, (700,450))
+		screen.blit(gg, (ai_settings.screen_width/2 - gg.get_width()/2,ai_settings.screen_height/2 - gg.get_height()/2))
 		pygame.display.flip()
 		
 if __name__ == "__main__":

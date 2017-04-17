@@ -8,21 +8,22 @@ class Timer():
 		self.default = ai_settings.time
 		self.bg_color = ai_settings.bg_color
 		self.screen = screen
-		self.rect = (0, 0, 0, 0)
+		self.screen_width = ai_settings.screen_width
+		self.screen_height = ai_settings.screen_height
+		self.rect = pygame.Rect( self.screen_width/15,self.screen_height/11, 25, -250)
 		self.color = (255, 255, 000)
+		
 		
 	def update(self, delay):
 		if self.time >= 0:
 			self.time -= delay
-			self.rect = (100, 920, 25, -0.2*self.time)
-		else:
-			self.rect = (100, 920, 25, -250)
+			self.rect.height = -self.time*0.2
 		
 	def reset(self):
 		self.time = self.default
 		
 	def erase(self):
-		pygame.draw.rect(self.screen, self.bg_color, (100, 920, 25, -250))
+		pygame.draw.rect(self.screen, self.bg_color, ( self.screen_width/15,self.screen_height/11, 25, -250))
 		
 	def blitme(self):
 		pygame.draw.rect(self.screen, self.color, self.rect)

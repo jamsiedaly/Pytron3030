@@ -9,6 +9,10 @@ class Ship():
 		self.ai_settings = ai_settings
 		self.image = pygame.image.load('Assets/BitmapV/Ship.bmp')
 		self.rect = self.image.get_rect()
+		self.ratio = ai_settings.screen_height/1080
+		self.rect.width = self.rect.width*self.ratio
+		self.rect.height = self.rect.height*self.ratio
+		self.image = pygame.transform.scale(self.image, (self.rect.width, self.rect.height))
 		self.screen_rect = screen.get_rect()
 	
 		self.rect.centerx = self.screen_rect.centerx 
