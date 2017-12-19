@@ -11,6 +11,10 @@ class Alien :
 		self.ai_settings = ai_settings
 		self.image = pygame.image.load('Assets/BitmapV/Enemy.bmp')
 		self.rect = self.image.get_rect()
+		self.ratio = ai_settings.screen_height/1080
+		self.rect.width = self.rect.width*self.ratio
+		self.rect.height = self.rect.height*self.ratio
+		self.image = pygame.transform.scale(self.image, (self.rect.width, self.rect.height))
 		self.speed = ai_settings.alien_speed
 		
 		self.rect.y = -1000

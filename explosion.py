@@ -12,7 +12,7 @@ class Explosion():
 		self.settings = parent.ai_settings
 		animation1 = randint(1,3)
 		animation2 = randint(1,3)
-		explosionAnimation = 'Assets/PNG/Damage/playerShip'+ str(animation1) +'_Damage'+ str(animation2) +'.PNG'
+		explosionAnimation = 'Assets/PNG/Damage/playerShip{0}_damage{1}.png'.format(animation1, animation2)
 		self.image = pygame.image.load(explosionAnimation)
 		self.rect = copy.deepcopy(parent.rect)
 		self.rect.width = 0
