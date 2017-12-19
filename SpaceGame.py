@@ -21,7 +21,7 @@ def run_game():
 	clock = pygame.time.Clock()
 	ai_settings = Settings()
 	screen_height = ai_settings.screen_height
-	screen = pygame.display.set_mode((1920, 1080),pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE)
+	screen = pygame.display.set_mode((ai_settings.screen_width, ai_settings.screen_height),pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE)
 	screen.fill(ai_settings.bg_color, (0,0,ai_settings.screen_width,ai_settings.screen_height))
 	pygame.display.set_caption("Alien Invasion")
 	ship = Ship(ai_settings, screen)
