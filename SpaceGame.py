@@ -49,7 +49,7 @@ def run_game():
 	gameOverMessage = ""
 	while True:
 		gf.update_screen(ai_settings, screen, ship, star_list, bullets, aliens, explosions, reload ,delay)
-		alienFrequency = int(pygame.time.get_ticks() / 10000)
+		alienFrequency = int(pygame.time.get_ticks() / 1000)
 		clock.tick()
 		delay = clock.get_time()
 		gf.check_events(ai_settings, screen, ship, bullets, reload)
@@ -66,7 +66,7 @@ def run_game():
 		
 		if paused == False:
 			oddsStar = randint(0, 10)
-			oddsAlien = randint(0, 50)
+			oddsAlien = randint(0, alienFrequency)
 		
 		for alien in aliens:
 			if pygame.sprite.collide_rect(ship, alien):
@@ -100,7 +100,7 @@ def run_game():
 		if oddsStar == 10:
 			star_list[starIndex%200].activate()
 			starIndex += 1
-		if oddsAlien <= alienFrequency:
+		if oddsAlien >= 100:
 			aliens[alienIndex%200].activate()
 			alienIndex += 1
 		if bullets:
